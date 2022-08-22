@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import {
   ChevronDownIcon,
@@ -20,13 +21,18 @@ import { signIn, signOut, useSession } from "next-auth/react";
 const Header = () => {
   const { data: session } = useSession();
   return (
-    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm h-11">
-      <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer -my-2">
-        <Image
-          objectFit="contain"
-          src="https://links.papareact.com/fqy"
-          layout="fill"
-        />
+    <div className="sticky top-0 z-50 items-center flex bg-white px-4 py-1 shadow-sm">
+      {/* <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm h-10"> */}
+
+      {/* <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer -my-2"> */}
+      <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
+        <Link href="/">
+          <Image
+            objectFit="contain"
+            src="https://links.papareact.com/fqy"
+            layout="fill"
+          />
+        </Link>
       </div>
       <div className="mx-7 flex items-center xl:min-w-[300px] cursor-pointer">
         <HomeIcon className="h-5 w-5" />
@@ -45,6 +51,7 @@ const Header = () => {
       </form>
 
       <div className="space-x-2 text-gray-500 items-center mx-5 hidden lg:inline-flex">
+        {/* <div className="space-x-2 text-gray-500 items-center mx-5 hidden lg:inline-flex scale-75 -mr-6"> */}
         <SparklesIcon className="icon" />
         <GlobeIcon className="icon" />
         <VideoCameraIcon className="icon" />

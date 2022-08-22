@@ -13,19 +13,29 @@ type Comment {
 
 type Post {
   body: String
-  commentList: [Comment] @materializer(query: "getCommentUsingPost_id")
   created_at: DateTime
   id: ID!
   image: String
-  subreddit: Subreddit
-    @materializer(
-      query: "getSubreddit"
-      arguments: [{ name: "id", field: "subreddit_id" }]
-    )
   subreddit_id: ID
   title: String
   username: String
-  voteList: [Vote] @materializer(query: "getVoteUsingPost_id")
+  votes: [Vote]
+    @materializer(
+      query: "getVotesByPostId"
+      arguments: [{ name: "post_id", field: "id" }]
+    )
+
+  comments: [Comment]
+    @materializer(
+      query: "getCommentByPostId"
+      arguments: [{ name: "post_id", field: "id" }]
+    )
+
+  subreddit: [Subreddit]
+    @materializer(
+      query: "getSubredditListById"
+      arguments: [{ name: "id", field: "subreddit_id" }]
+    )
 }
 
 type Subreddit {
@@ -69,8 +79,10 @@ type Query {
   getPostList: [Post]
     @dbquery(
       type: "postgresql"
-      schema: "public"
-      table: "post"
+      query: """
+      select * from "post"
+      order by "post"."created_at" desc
+      """
       configuration: "postgresql_config"
     )
   getPost(id: ID!): Post
@@ -80,23 +92,34 @@ type Query {
       table: "post"
       configuration: "postgresql_config"
     )
-  getCommentUsingPost_id(id: ID!): [Comment]
+
+  getPostListByTopic(topic: String!): [Post]
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."created_at", T."id", T."post_id", T."text", T."username"
-        FROM "public"."comment" T
-        WHERE T."post_id" = $1
+      select *, "post".id as id from "post"
+      join "subreddit" on "subreddit"."id" = "post"."subreddit_id"
+      where "subreddit"."topic" = $1
+      order by "post"."created_at" desc
       """
       configuration: "postgresql_config"
     )
-  getVoteUsingPost_id(id: ID!): [Vote]
+
+  getCommentByPostId(post_id: ID!): [Comment]
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."created_at", T."id", T."post_id", T."upvote", T."username"
-        FROM "public"."vote" T
-        WHERE T."post_id" = $1
+      select * from "comment" where "post_id" = $1
+      """
+      configuration: "postgresql_config"
+    )
+
+  getVotesByPostId(post_id: ID!): [Vote]
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "vote" where "post_id" = $1
+      order by "created_at" desc
       """
       configuration: "postgresql_config"
     )
@@ -114,6 +137,16 @@ type Query {
       schema: "public"
       query: """
       SELECT * FROM "subreddit" WHERE "topic" = $1
+      """
+      configuration: "postgresql_config"
+    )
+
+  getSubredditListById(id: ID!): [Subreddit]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      query: """
+      SELECT * FROM "subreddit" WHERE "id" = $1
       """
       configuration: "postgresql_config"
     )
