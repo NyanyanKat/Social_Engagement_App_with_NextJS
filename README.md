@@ -27,3 +27,5 @@ react-hot-toast
 
 react-timeago
 @types/react-timeago
+
+npm install @uiball/loaders

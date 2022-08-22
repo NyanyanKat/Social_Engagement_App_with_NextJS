@@ -25,12 +25,14 @@ const Header = () => {
       {/* <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm h-10"> */}
 
       {/* <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer -my-2"> */}
+      {/* <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer"> */}
       <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
         <Link href="/">
           <Image
             objectFit="contain"
             src="https://links.papareact.com/fqy"
             layout="fill"
+            // className="hover:scale-110"
           />
         </Link>
       </div>
