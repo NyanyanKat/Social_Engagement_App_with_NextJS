@@ -33,7 +33,7 @@ const Post = ({ post }: Props) => {
   });
 
   const [addVote] = useMutation(ADD_VOTE, {
-    refetchQueries: ["GET_ALL_VOTES_BY_POST_ID", "getVotesByPostId"],
+    refetchQueries: [GET_ALL_VOTES_BY_POST_ID, "getVotesByPostId"],
   });
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const Post = ({ post }: Props) => {
 
     if (votes?.length === 0) return 0;
     if (displayNumber === 0) {
-      return votes[0].upvote ? 1 : -1;
+      return votes[0]?.upvote ? 1 : -1;
     }
 
     return displayNumber;
