@@ -55,9 +55,16 @@ const Post = ({ post }: Props) => {
       return;
     }
 
-    if (vote && isUpVote) return;
-    if (vote === false && !isUpVote) return;
-    console.log("voting...", isUpVote);
+    if (vote && isUpVote) {
+      toast("You have already upvoted")
+      return
+    };
+    
+    if (vote === false && !isUpVote) {
+      toast("You have already downvoted")
+      return;
+    }
+    // console.log("voting...", isUpVote);
 
     await addVote({
       variables: {

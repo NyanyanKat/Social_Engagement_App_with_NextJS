@@ -161,6 +161,18 @@ type Query {
       configuration: "postgresql_config"
     )
 
+  getSubredditListLimit(limit: Int!): [Subreddit]
+    @dbquery(
+      type: "postgresql"
+      schema: "public"
+      query: """
+      SELECT * FROM "subreddit"
+      ORDER BY "created_at" desc
+      limit $1
+      """
+      configuration: "postgresql_config"
+    )
+
   getSubreddit(id: ID!): Subreddit
     @dbquery(
       type: "postgresql"
