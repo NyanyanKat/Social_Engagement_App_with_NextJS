@@ -32,7 +32,11 @@ const Home: NextPage = () => {
           <div className="">
             {/* List subreddits */}
             {subreddits?.map((subreddit, index) => (
-              <SubredditRow />
+              <SubredditRow
+                key={subreddit.id}
+                topic={subreddit.topic}
+                index={index}
+              />
             ))}
           </div>
         </div>

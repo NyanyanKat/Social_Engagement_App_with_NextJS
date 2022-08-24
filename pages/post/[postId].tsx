@@ -73,7 +73,7 @@ const PostPage = () => {
             <span className="text-red-500">{session?.user?.name}</span>
           </p>
         )}
-        
+
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col space-y-2"
@@ -88,6 +88,7 @@ const PostPage = () => {
           ></textarea>
           {session && (
             <button
+              // disabled={!session}
               type="submit"
               className="rounded-full bg-red-500 p-3 font-semibold text-white disabled:bg-gray-200 w-24"
             >
