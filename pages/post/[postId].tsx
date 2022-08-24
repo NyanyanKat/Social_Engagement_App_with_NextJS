@@ -30,6 +30,11 @@ const PostPage = () => {
 
   const post: Post = data?.getPostListByPostId;
 
+  // sort is in place... both comments and post array will be same. Use slice() to not change original array
+  const comments: Comments[] = post?.comments.slice().sort((a: any, b: any) => {
+    return a.created_at < b.created_at ? 1 : -1; //-1:1 for ascending/increasing order
+  });
+
   const {
     register,
     handleSubmit,
@@ -104,7 +109,7 @@ const PostPage = () => {
       >
         <hr className="py-2" />
 
-        {post?.comments.reverse().map((comment) => (
+        {comments?.map((comment) => (
           <div
             className="relative flex items-center space-x-2 space-y-5"
             key={comment.id}
