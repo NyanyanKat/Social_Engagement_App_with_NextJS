@@ -104,7 +104,7 @@ const PostPage = () => {
       >
         <hr className="py-2" />
 
-        {post?.comments.map((comment) => (
+        {post?.comments.reverse().map((comment) => (
           <div
             className="relative flex items-center space-x-2 space-y-5"
             key={comment.id}
