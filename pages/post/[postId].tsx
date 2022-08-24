@@ -50,21 +50,26 @@ const PostPage = () => {
       toast("❗ Please log in to comment ❗");
       return;
     }
-    const notification = toast.loading("Posting your comment....");
 
-    await addComment({
-      variables: {
-        post_id: router.query.postId,
-        username: session?.user?.name,
-        text: data.comment,
-      },
-    });
+    if (!data.comment || data.comment.length === 0) {
+      toast("Please write a comment");
+    } else {
+      const notification = toast.loading("Posting your comment....");
 
-    setValue("comment", "");
+      await addComment({
+        variables: {
+          post_id: router.query.postId,
+          username: session?.user?.name,
+          text: data.comment,
+        },
+      });
 
-    toast.success("Comment successfully posted", {
-      id: notification,
-    });
+      toast.success("Comment successfully posted", {
+        id: notification,
+      });
+
+      setValue("comment", "");
+    }
   };
 
   return (
