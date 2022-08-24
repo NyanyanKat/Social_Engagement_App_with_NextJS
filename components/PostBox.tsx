@@ -21,7 +21,7 @@ type Props = {
 };
 
 const PostBox = ({ subreddit }: Props) => {
-  console.log(subreddit)
+  //console.log(subreddit)
   const { data: session } = useSession();
   const [addPost] = useMutation(ADD_POST, {
     refetchQueries: [GET_ALL_POSTS, "getPostList"],
@@ -39,7 +39,7 @@ const PostBox = ({ subreddit }: Props) => {
   } = useForm<FormData>();
 
   const onSubmit = handleSubmit(async (formData) => {
-    console.log(formData);
+    //console.log(formData);
     const notification = toast.loading("Creating new post...");
 
     try {
@@ -55,7 +55,7 @@ const PostBox = ({ subreddit }: Props) => {
 
       if (!subredditExists) {
         // create subreddit
-        console.log("Subreddit is new => Creating a new subreddit!!");
+        //console.log("Subreddit is new => Creating a new subreddit!!");
 
         const {
           data: { insertSubreddit: newSubreddit },
@@ -65,7 +65,7 @@ const PostBox = ({ subreddit }: Props) => {
           },
         });
 
-        console.log("Creating post...", formData);
+        //console.log("Creating post...", formData);
         const image = formData.postImage || "";
 
         const {
@@ -80,11 +80,11 @@ const PostBox = ({ subreddit }: Props) => {
           },
         });
 
-        console.log("new post added in new subreddit: ", newPost);
+        //console.log("new post added in new subreddit: ", newPost);
       } else {
         // use existing subreddit
-        console.log("User existing subreddit!");
-        console.log(getSubredditListByTopic);
+        //console.log("User existing subreddit!");
+        //console.log(getSubredditListByTopic);
         const image = formData.postImage || "";
 
         const {
@@ -99,7 +99,7 @@ const PostBox = ({ subreddit }: Props) => {
           },
         });
 
-        console.log("new post is added in existing subreddit", newPost);
+        //console.log("new post is added in existing subreddit", newPost);
       }
 
       // After post has been added
